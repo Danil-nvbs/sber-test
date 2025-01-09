@@ -34,16 +34,12 @@
         document.querySelector('form').addEventListener('submit', event => {
             event.preventDefault();
             const service = document.getElementById('service').value;
-            // const password = document.getElementById('password').value;
-            
-            console.log(service)
             const status = document.getElementsByTagName('status');
             if (status.length) status[0].remove();
             
             const button = event.target.querySelector('.button');
             button.classList.toggle('button--loading')
             button.disabled = true;
-
 
             setTimeout(() => {
                 if (service === 'tourism') {

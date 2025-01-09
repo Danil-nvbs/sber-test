@@ -36,26 +36,16 @@
         let total = Object.values(testData).reduce((acc, elem) => acc + elem, 0)
         let data = Object.entries(testData).map(([x, value]) => {return {x, value }})
 
-        
-
-        // create pie chart and configure it
-        // var stage = anychart.graphics.create("container")
-
         var pie = anychart.pie(data);
         pie.title("Потребительская корзина туриста")
         pie.innerRadius('80%');
         pie.labels(true);
-        // pie.legend(true)
-        // pie.bounds(0, "10%", "40%", "90%");
         pie.tooltip()
            .format("{%value}{decimalsCount:2} рублей\n{%yPercentOfTotal}{decimalsCount:2, decimalPoint:, type:percent}")
            .separator(false);
         
-        // create a layer and put some shapes in it
         var label = anychart.standalones.label();
-        label
-        // .format
-        .text(`Траты\n ${total.toFixed(2)} рублей`);
+        label.text(`Траты\n ${total.toFixed(2)} рублей`);
         // label.width("100%");
         // label.height("100%");
         label.fontColor("#000000");
@@ -65,8 +55,7 @@
         pie.center().content(label);
         pie.container('container')
         pie.draw()
-        // stage.draw()
-        });
+    });
     </script>
 
 </body>
