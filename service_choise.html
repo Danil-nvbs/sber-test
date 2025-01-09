@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorization Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://db.onlinewebfonts.com/c/c68e21ad1a10803b1ef491fd0392b067?family=SB+Sans+Text" rel="stylesheet">
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorization Form</title>
+</head>
+<body>
+    <form action="/login" method="post">
+        <h5>Выберите сервис</h5><br>
+        <select class="form-select" name="service" id="service">
+            <option value="Выберите сервис" disabled selected hidden>Выберите сервис</option>
+            <option value="census">census</option>
+            <option value="ga">ga</option>
+            <option value="tourism">tourism</option>
+          </select>
+        
+        <button type="submit" class="button">
+            <span class="button__text">Подтвердить</span>
+        </button>
+    </form>
+
+    <script>
+
+
+
+        document.querySelector('form').addEventListener('submit', event => {
+            event.preventDefault();
+            const service = document.getElementById('service').value;
+            // const password = document.getElementById('password').value;
+            
+            console.log(service)
+            const status = document.getElementsByTagName('status');
+            if (status.length) status[0].remove();
+            
+            const button = event.target.querySelector('.button');
+            button.classList.toggle('button--loading')
+            button.disabled = true;
+
+
+            setTimeout(() => {
+                if (service === 'tourism') {
+                    document.location.href = '/service_tourism.html';
+                } else {
+                    const message = document.createElement('status');
+                    message.tagName = 'status'
+                    message.id = 'status'
+                    message.textContent = 'Сервис недоступен';
+                    message.style.color = 'red';
+                    event.target.appendChild(message);
+                }
+                
+                button.classList.toggle('button--loading')
+                button.disabled = false;
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
