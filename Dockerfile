@@ -4,5 +4,6 @@ FROM nginx:alpine
 # Копирование статических HTML-файлов на сервер Nginx
 COPY . /usr/share/nginx/html
 
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
 # Экспонирование порта 80
 EXPOSE 80
