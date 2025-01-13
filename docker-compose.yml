@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: build-stage
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/node/app
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: nginx-stage
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html

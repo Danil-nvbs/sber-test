@@ -10,7 +10,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true, parameterLimit: 50000 }));
 app.use(cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "http://localhost",
     credentials: true,
 }))
 app.use('/', router);
