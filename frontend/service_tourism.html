@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сервис tourism</title>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-pie.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-base.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<header>
+    <img src="logo.png" alt="Лого">
+    <div>
+        tourism
+    </div>
+    <nav>
+        <button onclick="window.location.href='index.html'" class="button">Выйти</button>   
+    </nav>
+</header>
+<body>
+    <div id="container" class="container"></div>
+    <script>
+        anychart.onDocumentReady(() => {
+
+        let url = 'http://localhost:3001/getDataset?type=tourism'
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.send();
+
+        xhr.onload = () => {
+            console.log('here')
+                setTimeout(() => {
+                    if (xhr.status != 200) {
+                    const message = document.createElement('status');
+                    message.tagName = 'status'
+                    message.id = 'status'
+                    message.textContent = 'Ошибка при получении данных';
+                    message.style.color = 'red';
+                    event.target.appendChild(message);
+                    button.classList.toggle('button--loading')
+                    button.disabled = false;
+                } else {
+
+
+                    let { dataset } = JSON.parse(xhr.response)
+                    console.log(dataset)
+                    let total = Object.values(dataset).reduce((acc, elem) => acc + elem, 0)
+                    let data = Object.entries(dataset).map(([x, value]) => {return {x, value }})
+                    console.log(data)
+
+                    var pie = anychart.pie(data);
+                    pie.title("Потребительская корзина туриста")
+                    pie.innerRadius('80%');
+                    pie.labels(true);
+                    pie.tooltip()
+                    .format("{%value}{decimalsCount:2} рублей\n{%yPercentOfTotal}{decimalsCount:2, decimalPoint:, type:percent}")
+                    .separator(false);
+                    
+                    var label = anychart.standalones.label();
+                    label.text(`Траты\n ${total.toFixed(2)} рублей`);
+                    label.fontColor("#000000");
+                    label.position('center')
+                    label.forn
+
+                    pie.center().content(label);
+                    pie.container('container')
+                    pie.draw()
+
+                }
+                }, 1000)
+
+            };
+        
+
+    });
+    </script>
+
+</body>
+</html>
